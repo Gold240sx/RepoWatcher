@@ -23,4 +23,4 @@ DerivedData/
 *.dSYM
 
 # Swift Package Manager
-.build/
+.build/RepoWatcher/Resources/Secrets.plist
