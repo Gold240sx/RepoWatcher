@@ -1,5 +1,6 @@
 # Secrets
-Resources/Secrets.plist
+**/Secrets.plist
+!**/Secrets.template.plist
 
 # Xcode
 xcuserdata/
@@ -20,8 +21,6 @@ DerivedData/
 *.ipa
 *.dSYM.zip
 *.dSYM
-
- **/Secrets.plist
 
 # Swift Package Manager
 .build/
