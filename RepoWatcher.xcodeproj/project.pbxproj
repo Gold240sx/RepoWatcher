@@ -41,7 +41,6 @@
 		E617C6D12D5F1E3F002C8007 /* RepoWatcherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RepoWatcherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E617C6D32D5F1E40002C8007 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		E617C6D52D5F1E40002C8007 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		E617C7572D5FCD67002C8007 /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -105,7 +104,6 @@
 		E617C6B32D5F1E04002C8007 = {
 			isa = PBXGroup;
 			children = (
-				E617C7572D5FCD67002C8007 /* Untitled.swift */,
 				E617C6BE2D5F1E04002C8007 /* RepoWatcher */,
 				E617C6D72D5F1E40002C8007 /* RepoWatcherWidget */,
 				E617C6D22D5F1E40002C8007 /* Frameworks */,

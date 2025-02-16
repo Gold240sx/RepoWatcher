@@ -21,6 +21,14 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<RepoEntry>) -> ()) {
+        // Add debug logging at the start
+        print("Debug: Main bundle path - \(Bundle.main.bundlePath)")
+        print("Debug: Widget bundle path - \(Bundle(identifier: "com.michaelMartell.RepoWatcher.RepoWatcherWidget")?.bundlePath ?? "not found")")
+        
+        if let widgetBundle = Bundle(identifier: "com.michaelMartell.RepoWatcher.RepoWatcherWidget") {
+            print("Debug: Files in widget bundle - \(try? FileManager.default.contentsOfDirectory(atPath: widgetBundle.bundlePath))")
+        }
+        
         // Create a default timeline with fallback data in case of failure
         let fallbackEntry = RepoEntry(
             date: .now,

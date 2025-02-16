@@ -1,6 +1,10 @@
 # Secrets
-**/Secrets.plist
-!**/Secrets.template.plist
+RepoWatcher/Resources/Secrets.plist
+Config.xcconfig
+
+# Keep templates
+!RepoWatcher/Resources/Secrets.template.plist
+!Config.template.xcconfig
 
 # Xcode
 xcuserdata/
@@ -23,4 +27,3 @@ DerivedData/
 *.dSYM
 
 # Swift Package Manager
-.build/RepoWatcher/Resources/Secrets.plist
