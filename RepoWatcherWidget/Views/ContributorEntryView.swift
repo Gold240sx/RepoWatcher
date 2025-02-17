@@ -19,6 +19,7 @@ struct ContributorEntryView : View {
     var body: some View {
         VStack {
             RepoMediumView(repo:  entry.repo)
+            Spacer().frame(height: 24)
             ContributorMediumView(repo: entry.repo)
         }
     }

@@ -23,7 +23,7 @@ struct CompactRepoEntryView : View {
         case .systemMedium:
             RepoMediumView(repo: entry.repo)
                 .containerBackground(.fill.tertiary, for: .widget)
-        case .systemLarge: VStack (spacing: 36) {
+        case .systemLarge: VStack (spacing: 76) {
             RepoMediumView(repo: entry.repo)
                 .containerBackground(.fill.tertiary, for: .widget)
             if let bottomRepo = entry.bottomRepo {
