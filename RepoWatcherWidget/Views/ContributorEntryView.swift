@@ -17,8 +17,9 @@ struct ContributorEntryView : View {
     var entry: ContributorEntry
 
     var body: some View {
-//        RepoMediumView(repo: entry.repo)
-//            .containerBackground(.fill.tertiary, for: .widget)
-        Text(entry.date.formatted())
+        VStack {
+            RepoMediumView(repo:  entry.repo)
+            ContributorMediumView(repo: entry.repo)
+        }
     }
 }
