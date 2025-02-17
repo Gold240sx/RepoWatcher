@@ -71,8 +71,13 @@ struct RepoMediumView: View {
 
 struct RepoMediumView_Previews: PreviewProvider {
     static var previews: some View {
-        RepoMediumView(repo: Repository.preview)
-            .previewContext(WidgetPreviewContext(family: .systemLarge))
-            .containerBackground(.fill.tertiary, for: .widget)
+        VStack {
+            RepoMediumView(repo: MockData.repoOne)
+                .previewContext(WidgetPreviewContext(family: .systemLarge))
+                .containerBackground(.fill.tertiary, for: .widget)
+            RepoMediumView(repo: MockData.repoTwo)
+                .previewContext(WidgetPreviewContext(family: .systemLarge))
+                .containerBackground(.fill.tertiary, for: .widget)
+        }
     }
 }

@@ -31,5 +31,5 @@ struct RepoWatcherWidget: Widget {
 #Preview(as: .systemMedium) {
     RepoWatcherWidget()
 } timeline: {
-    RepoEntry(date: Date(), repo: Repository.preview)
+    RepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
 }

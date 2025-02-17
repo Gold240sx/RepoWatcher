@@ -11,12 +11,12 @@ import SwiftUI
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> RepoEntry {
         // This is used for the design-time preview in Xcode
-        RepoEntry(date: Date(), repo: Repository.preview)
+        RepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (RepoEntry) -> ()) {
         // This is used for the widget gallery preview
-        let entry = RepoEntry(date: Date(), repo: Repository.preview)
+        let entry = RepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
         completion(entry)
     }
 
@@ -26,13 +26,14 @@ struct Provider: TimelineProvider {
         print("Debug: Widget bundle path - \(Bundle(identifier: "com.michaelMartell.RepoWatcher.RepoWatcherWidget")?.bundlePath ?? "not found")")
         
         if let widgetBundle = Bundle(identifier: "com.michaelMartell.RepoWatcher.RepoWatcherWidget") {
-            print("Debug: Files in widget bundle - \(try? FileManager.default.contentsOfDirectory(atPath: widgetBundle.bundlePath))")
+            print("Debug: Files in widget bundle - \(String(describing: try? FileManager.default.contentsOfDirectory(atPath: widgetBundle.bundlePath)))")
         }
         
         // Create a default timeline with fallback data in case of failure
         let fallbackEntry = RepoEntry(
             date: .now,
-            repo: Repository.fallback
+            repo: MockData.repoOne,
+            bottomRepo: MockData.repoTwo
         )
         
         let fallbackTimeline = Timeline(
@@ -44,8 +45,8 @@ struct Provider: TimelineProvider {
             do {
                 var repo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.davidsGaragePro)
                 let avatarImageData = try await NetworkManager.shared.downloadImageData(from: repo.owner.avatarUrl) ?? UIImage(named: "avatar")?.pngData() ?? Data()
-                repo.avatarData = avatarImageData ?? Data()
-                let entry = RepoEntry(date: .now, repo: repo)
+                repo.avatarData = avatarImageData
+                let entry = RepoEntry(date: .now, repo: repo, bottomRepo: repo)
                 let nextUpdate = Date().addingTimeInterval(43200) // 12 hours in seconds
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)

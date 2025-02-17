@@ -11,6 +11,7 @@ import WidgetKit
 struct RepoEntry: TimelineEntry {
     let date: Date
     let repo: Repository
+    let bottomRepo: Repository?
 }
 
 struct RepoWatcherWidgetEntryView : View {
@@ -25,7 +26,7 @@ struct RepoWatcherWidgetEntryView : View {
         case .systemLarge: VStack (spacing: 36) {
             RepoMediumView(repo: entry.repo)
                 .containerBackground(.fill.tertiary, for: .widget)
-            RepoMediumView(repo: entry.repo)
+            RepoMediumView(repo: MockData.repoTwo)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
         
