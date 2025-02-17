@@ -26,8 +26,10 @@ struct RepoWatcherWidgetEntryView : View {
         case .systemLarge: VStack (spacing: 36) {
             RepoMediumView(repo: entry.repo)
                 .containerBackground(.fill.tertiary, for: .widget)
-            RepoMediumView(repo: MockData.repoTwo)
-                .containerBackground(.fill.tertiary, for: .widget)
+            if let bottomRepo = entry.bottomRepo {
+                RepoMediumView(repo: bottomRepo)
+                    .containerBackground(.fill.tertiary, for: .widget)
+            }
         }
         
         case .systemSmall, .systemExtraLarge, .accessoryCircular, .accessoryRectangular, .accessoryInline:

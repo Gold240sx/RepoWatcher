@@ -42,12 +42,25 @@ struct Provider: TimelineProvider {
         )
         
         Task {
+            let nextUpdate = Date().addingTimeInterval(43200) // 12 hours in seconds
+
             do {
+                // Get Top Repo
                 var repo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.davidsGaragePro)
                 let avatarImageData = try await NetworkManager.shared.downloadImageData(from: repo.owner.avatarUrl) ?? UIImage(named: "avatar")?.pngData() ?? Data()
                 repo.avatarData = avatarImageData
-                let entry = RepoEntry(date: .now, repo: repo, bottomRepo: repo)
-                let nextUpdate = Date().addingTimeInterval(43200) // 12 hours in seconds
+
+                // Get Bottom Repo if in Large Widget
+                var bottomRepo: Repository?
+
+                if context.family == .systemLarge {
+                    bottomRepo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.portfolio)
+                    let avatarImageData = try await NetworkManager.shared.downloadImageData(from: bottomRepo!.owner.avatarUrl)
+                    bottomRepo!.avatarData = avatarImageData ?? Data()
+                }
+
+                // Create Entry & Timeline
+                let entry = RepoEntry(date: .now, repo: repo, bottomRepo: bottomRepo)
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
             } catch {
