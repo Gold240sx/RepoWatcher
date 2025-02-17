@@ -8,16 +8,16 @@
 import WidgetKit
 import SwiftUI
 
-struct RepoWatcherWidget: Widget {
+struct CompactRepoWidget: Widget {
     let kind: String = "RepoWatcherWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: CompactRepoProvider()) { entry in
             if #available(iOS 17.0, *) {
-                RepoWatcherWidgetEntryView(entry: entry)
+                CompactRepoEntryView(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
             } else {
-                RepoWatcherWidgetEntryView(entry: entry)
+                CompactRepoEntryView(entry: entry)
                     .padding()
                     .background()
             }
@@ -29,7 +29,7 @@ struct RepoWatcherWidget: Widget {
 }
 
 #Preview(as: .systemMedium) {
-    RepoWatcherWidget()
+    CompactRepoWidget()
 } timeline: {
-    RepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
+    CompactRepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
 }
