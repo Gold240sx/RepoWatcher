@@ -22,14 +22,14 @@ struct RepoWatcherWidget: Widget {
                     .background()
             }
         }
-        .configurationDisplayName("Repowatcher Widget")
-        .description("This is the Repowatcher Widget")
-        .supportedFamilies([.systemMedium])
+        .configurationDisplayName("Repo Watcher")
+        .description("Keep an eye on one or two Github repositories.")
+        .supportedFamilies([.systemMedium, .systemLarge])
     }
 }
 
 #Preview(as: .systemMedium) {
     RepoWatcherWidget()
 } timeline: {
-    RepoEntry(date: Date(), repo: Repository.preview, avatarImageData: Data())
+    RepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
 }
