@@ -11,12 +11,12 @@ import SwiftUI
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> RepoEntry {
         // This is used for the design-time preview in Xcode
-        RepoEntry(date: Date(), repo: Repository.preview, avatarImageData: Data())
+        RepoEntry(date: Date(), repo: Repository.preview)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (RepoEntry) -> ()) {
         // This is used for the widget gallery preview
-        let entry = RepoEntry(date: Date(), repo: Repository.preview, avatarImageData: Data())
+        let entry = RepoEntry(date: Date(), repo: Repository.preview)
         completion(entry)
     }
 
@@ -32,8 +32,7 @@ struct Provider: TimelineProvider {
         // Create a default timeline with fallback data in case of failure
         let fallbackEntry = RepoEntry(
             date: .now,
-            repo: Repository.fallback,
-            avatarImageData: UIImage(named: "avatar")?.pngData() ?? Data()
+            repo: Repository.fallback
         )
         
         let fallbackTimeline = Timeline(
@@ -43,9 +42,10 @@ struct Provider: TimelineProvider {
         
         Task {
             do {
-                let repo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.davidsGaragePro)
+                var repo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.davidsGaragePro)
                 let avatarImageData = try await NetworkManager.shared.downloadImageData(from: repo.owner.avatarUrl) ?? UIImage(named: "avatar")?.pngData() ?? Data()
-                let entry = RepoEntry(date: .now, repo: repo, avatarImageData: avatarImageData)
+                repo.avatarData = avatarImageData ?? Data()
+                let entry = RepoEntry(date: .now, repo: repo)
                 let nextUpdate = Date().addingTimeInterval(43200) // 12 hours in seconds
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)

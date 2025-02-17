@@ -82,8 +82,8 @@ class NetworkManager {
         switch httpResponse.statusCode {
             case 200:
                 do {
-                    let repo = try decoder.decode(Repository.self, from: data)
-                    return repo
+                    let codingData = try decoder.decode(Repository.CodingData.self, from: data)
+                    return codingData.repo
                 } catch {
                     print("❌ Decoding error: \(error)")
                     throw NetworkError.invalidRepoData
@@ -135,8 +135,8 @@ class NetworkManager {
         switch httpResponse.statusCode {
             case 200:
                 do {
-                    let repo = try decoder.decode(Repository.self, from: data)
-                    return repo
+                    let codingData = try decoder.decode(Repository.CodingData.self, from: data)
+                    return codingData.repo
                 } catch {
                     print("❌ Decoding error: \(error)")
                     throw NetworkError.invalidRepoData
