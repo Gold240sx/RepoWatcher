@@ -13,4 +13,6 @@ extension UserDefaults {
     }
     
     static let repoKey = "repos"
+    
+    static let githubKey = ""
 }

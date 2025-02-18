@@ -10,33 +10,21 @@ import WidgetKit
 
 struct DoubleRepoEntry: TimelineEntry {
     let date: Date
-    let repo: Repository
-    let bottomRepo: Repository?
+    let topRepo: Repository
+    let bottomRepo: Repository
 }
 
 struct DoubleRepoEntryView : View {
     @Environment(\.widgetFamily) var family
     var entry: DoubleRepoProvider.Entry
 
+    
     var body: some View {
-        switch family {
-        case .systemMedium:
-            RepoMediumView(repo: entry.repo)
+        VStack(spacing: 36) {
+            RepoMediumView(repo: entry.topRepo)
                 .containerBackground(.fill.tertiary, for: .widget)
-        case .systemLarge: VStack (spacing: 76) {
-            RepoMediumView(repo: entry.repo)
+            RepoMediumView(repo: entry.bottomRepo)
                 .containerBackground(.fill.tertiary, for: .widget)
-            if let bottomRepo = entry.bottomRepo {
-                RepoMediumView(repo: bottomRepo)
-                    .containerBackground(.fill.tertiary, for: .widget)
-            }
         }
-        
-        case .systemSmall, .systemExtraLarge, .accessoryCircular, .accessoryRectangular, .accessoryInline:
-            EmptyView()
-        @unknown default:
-            EmptyView()
-        }
-        //repo: entry.repo, avatarImageData: entry.avatarImageData
     }
 }

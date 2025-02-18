@@ -15,9 +15,15 @@ class NetworkManager {
     
     // Access token from configuration
     private var token: String? {
-        let token = getToken()
-        print("Debug: GitHub token found: \(token != nil)")
-        return token
+        // Check shared UserDefaults first
+        if let sharedDefaults = UserDefaults(suiteName: "group.com.michaelMartell.RepoWatcher"),
+           let userToken = sharedDefaults.string(forKey: "githubKey"),
+           !userToken.isEmpty {
+            return userToken
+        }
+        
+        // Fall back to Secrets.plist
+        return getToken()
     }
     
     private func getToken() -> String? {

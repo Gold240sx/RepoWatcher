@@ -8,7 +8,7 @@
 import SwiftUI
 import WidgetKit
 
-struct SingleRepoView: View {
+struct ContributorMediumView: View {
     let repo: Repository
     var body: some View {
         VStack {

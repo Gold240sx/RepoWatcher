@@ -9,18 +9,18 @@ import WidgetKit
 import SwiftUI
 
 struct DoubleRepoProvider: TimelineProvider {
-    func placeholder(in context: Context) -> CompactRepoEntry {
+    func placeholder(in context: Context) -> DoubleRepoEntry {
         // This is used for the design-time preview in Xcode
-        CompactRepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
+        DoubleRepoEntry(date: Date(), topRepo: MockData.repoOne, bottomRepo: MockData.repoTwo)
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (CompactRepoEntry) -> ()) {
+    func getSnapshot(in context: Context, completion: @escaping (DoubleRepoEntry) -> ()) {
         // This is used for the widget gallery preview
-        let entry = CompactRepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
+        let entry = DoubleRepoEntry(date: Date(), topRepo: MockData.repoOne, bottomRepo: MockData.repoTwo)
         completion(entry)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<CompactRepoEntry>) -> ()) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<DoubleRepoEntry>) -> ()) {
         // Add debug logging at the start
         print("Debug: Main bundle path - \(Bundle.main.bundlePath)")
         print("Debug: Widget bundle path - \(Bundle(identifier: "com.michaelMartell.RepoWatcher.RepoWatcherWidget")?.bundlePath ?? "not found")")
@@ -30,9 +30,9 @@ struct DoubleRepoProvider: TimelineProvider {
         }
         
         // Create a default timeline with fallback data in case of failure
-        let fallbackEntry = CompactRepoEntry(
+        let fallbackEntry = DoubleRepoEntry(
             date: .now,
-            repo: MockData.repoOne,
+            topRepo: MockData.repoOne,
             bottomRepo: MockData.repoTwo
         )
         
@@ -47,20 +47,16 @@ struct DoubleRepoProvider: TimelineProvider {
             do {
                 // Get Top Repo
                 var repo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.davidsGaragePro)
-                let avatarImageData = try await NetworkManager.shared.downloadImageData(from: repo.owner.avatarUrl) ?? UIImage(named: "avatar")?.pngData() ?? Data()
-                repo.avatarData = avatarImageData
+                let topAvatarImageData = try await NetworkManager.shared.downloadImageData(from: repo.owner.avatarUrl) ?? UIImage(named: "avatar")?.pngData() ?? Data()
+                repo.avatarData = topAvatarImageData
 
-                // Get Bottom Repo if in Large Widget
-                var bottomRepo: Repository?
-
-                if context.family == .systemLarge {
-                    bottomRepo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.portfolio)
-                    let avatarImageData = try await NetworkManager.shared.downloadImageData(from: bottomRepo!.owner.avatarUrl)
-                    bottomRepo!.avatarData = avatarImageData ?? Data()
-                }
+                // Get Bottom Repo
+                var bottomRepo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.portfolio)
+                let bottomAvatarImageData = try await NetworkManager.shared.downloadImageData(from: bottomRepo.owner.avatarUrl)
+                bottomRepo.avatarData = bottomAvatarImageData ?? Data()
 
                 // Create Entry & Timeline
-                let entry = CompactRepoEntry(date: .now, repo: repo, bottomRepo: bottomRepo)
+                let entry = DoubleRepoEntry(date: .now, topRepo: repo, bottomRepo: bottomRepo)
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
             } catch {
