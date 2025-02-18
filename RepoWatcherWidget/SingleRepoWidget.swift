@@ -14,9 +14,15 @@ struct SingleRepoWidget: Widget {
     let kind: String = "SingleRepoWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: SingleRepoProvider()) { entry in
+//        StaticConfiguration(kind: kind, provider: SingleRepoProvider()) { entry in
+//            SingleRepoEntryView(entry: entry)
+//                .containerBackground(.fill.tertiary, for: .widget)
+//        }
+//        .configurationDisplayName("Single Repo")
+//        .description("Track a single Repository")
+//        .supportedFamilies([.systemMedium,.systemLarge])
+        IntentConfiguration(kind: kind, intent: SelectSingleRepoIntent.self, provider: SingleRepoProvider()){ entry in
             SingleRepoEntryView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName("Single Repo")
         .description("Track a single Repository")

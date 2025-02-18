@@ -13,8 +13,7 @@ import Foundation
 struct ContentView: View {
     @State private var newRepo = ""
     @State private var repos: [String] = []
-    @AppStorage("githubKey", store: UserDefaults(suiteName: "group.com.michaelMartell.RepoWatcher"))
-    private var githubKey = ""
+    @AppStorage("githubKey", store: UserDefaults.shared) private var githubKey = ""
     @State private var showingTokenSheet = false
     
     // Initialize with value from Secrets.plist
@@ -61,6 +60,20 @@ struct ContentView: View {
         return nil
     }
     
+    private func saveRepo(_ repo: String) {
+        if !repos.contains(repo) && !repo.isEmpty {
+            repos.append(repo)
+            UserDefaults.shared.set(repos, forKey: UserDefaults.repoKey)
+            newRepo = ""
+        }
+    }
+    
+    private func deleteRepo(_ repo: String) {
+        if repos.count > 1 {
+            repos.removeAll { $0 == repo }
+            UserDefaults.shared.set(repos, forKey: UserDefaults.repoKey)
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -101,15 +114,7 @@ struct ContentView: View {
                         .textFieldStyle(.roundedBorder)
 
                     Button {
-                        if !repos.contains(newRepo) && !newRepo.isEmpty {
-                            repos.append(newRepo)
-                            
-                            // Save it
-                            UserDefaults.shared.set(repos, forKey: UserDefaults.repoKey)
-                            newRepo = ""
-                        } else {
-                            print("Repo already exists or empty")
-                        }
+                        saveRepo(newRepo)
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .resizable()

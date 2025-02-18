@@ -219,6 +219,7 @@ enum NetworkError: Error {
 }
 
 enum RepoURL {
+    static let prefix = "https://api.github.com/repos/"
     static let monthlyWidgetFull = "https://api.github.com/repos/gold240sx/Monthly-Widget-Full"
     static let davidsGaragePro = "https://api.github.com/repos/Gold240sx/DGP_Prod"
     static let portfolio = "https://api.github.com/repos/Gold240sx/portfolio_2025"

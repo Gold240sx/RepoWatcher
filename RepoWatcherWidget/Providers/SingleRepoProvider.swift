@@ -8,23 +8,19 @@
 import WidgetKit
 import SwiftUI
 
-struct SingleRepoProvider: TimelineProvider {
-    func placeholder(in context: Context) -> SingleRepoEntry {
-        SingleRepoEntry(date: .now, repo: MockData.repoOne)
-    }
-    
-    func getSnapshot(in context: Context, completion: @escaping (SingleRepoEntry) -> Void) {
+struct SingleRepoProvider: IntentTimelineProvider {
+    func getSnapshot(for configuration: SelectSingleRepoIntent, in context: Context, completion: @escaping @Sendable (SingleRepoEntry) -> Void) {
         let entry = SingleRepoEntry(date: .now, repo: MockData.repoOne)
         completion(entry)
     }
     
-    func getTimeline(in context: Context, completion: @escaping (Timeline<SingleRepoEntry>) -> Void) {
+    func getTimeline(for configuration: SelectSingleRepoIntent, in context: Context, completion: @escaping @Sendable (Timeline<SingleRepoEntry>) -> Void) {
         Task {
             let nextUpdate = Date().addingTimeInterval(43200) // 12 hours in seconds
             
             do {
                 // Get Repo
-                let repoToShow = RepoURL.google
+                let repoToShow = RepoURL.prefix + configuration.repo!
                 var repo = try await NetworkManager.shared.getRepo(atUrl: repoToShow)
                 let avatarImageData = try await NetworkManager.shared.downloadImageData(from: repo.owner.avatarUrl)
                 repo.avatarData = avatarImageData ?? Data()
@@ -54,4 +50,9 @@ struct SingleRepoProvider: TimelineProvider {
             }
         }
     }
+    
+    func placeholder(in context: Context) -> SingleRepoEntry {
+        SingleRepoEntry(date: .now, repo: MockData.repoOne)
+    }
+
 }
