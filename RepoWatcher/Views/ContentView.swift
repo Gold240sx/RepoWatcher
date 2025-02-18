@@ -22,7 +22,15 @@ struct ContentView: View {
                         .textFieldStyle(.roundedBorder)
 
                     Button {
-
+                        if !repos.contains(newRepo) && !newRepo.isEmpty {
+                            repos.append(newRepo)
+                            
+                            // Save it
+                            UserDefaults.shared.set(repos, forKey: UserDefaults.repoKey)
+                            newRepo = ""
+                        } else {
+                            print("Repo already exists or empty")
+                        }
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .resizable()
@@ -42,7 +50,10 @@ struct ContentView: View {
                         Text(repo)
                             .swipeActions {
                                 Button("Delete") {
-
+                                    if repos.count > 1 {
+                                        repos.removeAll { $0 == repo}
+                                        UserDefaults.shared.set("repos", forKey: UserDefaults.repoKey)
+                                    }
                                 }
                                 .tint(.red)
                             }
@@ -50,6 +61,16 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Repo List")
+            .onAppear {
+                guard let retrievedRepos = UserDefaults.shared.array(forKey: UserDefaults.repoKey) as? [String] else {
+                    let defaultValues = ["sallen0400/swift-news"]
+                    UserDefaults.shared.set(defaultValues, forKey: UserDefaults.repoKey)
+                    repos = defaultValues
+                    return
+                }
+                
+                repos = retrievedRepos
+            }
         }
     }
 }
