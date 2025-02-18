@@ -8,19 +8,14 @@
 import WidgetKit
 import SwiftUI
 
-struct DoubleRepoProvider: TimelineProvider {
-    func placeholder(in context: Context) -> DoubleRepoEntry {
-        // This is used for the design-time preview in Xcode
-        DoubleRepoEntry(date: Date(), topRepo: MockData.repoOne, bottomRepo: MockData.repoTwo)
-    }
-
-    func getSnapshot(in context: Context, completion: @escaping (DoubleRepoEntry) -> ()) {
+struct DoubleRepoProvider: IntentTimelineProvider {
+    func getSnapshot(for configuration: SelectTwoReposIntent, in context: Context, completion: @escaping @Sendable (DoubleRepoEntry) -> Void) {
         // This is used for the widget gallery preview
         let entry = DoubleRepoEntry(date: Date(), topRepo: MockData.repoOne, bottomRepo: MockData.repoTwo)
         completion(entry)
     }
-
-    func getTimeline(in context: Context, completion: @escaping (Timeline<DoubleRepoEntry>) -> ()) {
+    
+    func getTimeline(for configuration: SelectTwoReposIntent, in context: Context, completion: @escaping @Sendable (Timeline<DoubleRepoEntry>) -> Void) {
         // Add debug logging at the start
         print("Debug: Main bundle path - \(Bundle.main.bundlePath)")
         print("Debug: Widget bundle path - \(Bundle(identifier: "com.michaelMartell.RepoWatcher.RepoWatcherWidget")?.bundlePath ?? "not found")")
@@ -46,12 +41,12 @@ struct DoubleRepoProvider: TimelineProvider {
 
             do {
                 // Get Top Repo
-                var repo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.davidsGaragePro)
+                var repo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.prefix + configuration.topRepo!)
                 let topAvatarImageData = try await NetworkManager.shared.downloadImageData(from: repo.owner.avatarUrl) ?? UIImage(named: "avatar")?.pngData() ?? Data()
                 repo.avatarData = topAvatarImageData
 
                 // Get Bottom Repo
-                var bottomRepo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.portfolio)
+                var bottomRepo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.prefix + configuration.bottomRepo!)
                 let bottomAvatarImageData = try await NetworkManager.shared.downloadImageData(from: bottomRepo.owner.avatarUrl)
                 bottomRepo.avatarData = bottomAvatarImageData ?? Data()
 
@@ -64,5 +59,10 @@ struct DoubleRepoProvider: TimelineProvider {
                 completion(fallbackTimeline) // Use fallback timeline in case of error
             }
         }
+    }
+    
+    func placeholder(in context: Context) -> DoubleRepoEntry {
+        // This is used for the design-time preview in Xcode
+        DoubleRepoEntry(date: Date(), topRepo: MockData.repoOne, bottomRepo: MockData.repoTwo)
     }
 }

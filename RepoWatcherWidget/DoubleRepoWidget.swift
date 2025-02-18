@@ -12,7 +12,7 @@ struct DoubleRepoWidget: Widget {
     let kind: String = "RepoWatcherWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: DoubleRepoProvider()) { entry in
+        IntentConfiguration(kind: kind, intent: SelectTwoReposIntent.self, provider: DoubleRepoProvider()) { entry in
             if #available(iOS 17.0, *) {
                 DoubleRepoEntryView(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
