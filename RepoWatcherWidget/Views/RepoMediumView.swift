@@ -19,16 +19,26 @@ struct RepoMediumView: View {
         HStack {
             VStack(alignment: .leading) {
                 HStack {
-                    Image(uiImage: UIImage(data: repo.avatarData) ?? (UIImage(named: "avatar")!))
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .clipShape(Circle())
+                    if #available(iOS 18.0, *) {
+                        Image(uiImage: UIImage(data: repo.avatarData) ?? (UIImage(named: "avatar")!))
+                            .resizable()
+                            .widgetAccentedRenderingMode(.desaturated)
+                            .frame(width: 50, height: 50)
+                            .clipShape(Circle())
+                    } else {
+                        Image(uiImage: UIImage(data: repo.avatarData) ?? (UIImage(named: "avatar")!))
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .clipShape(Circle())
+                        
+                    }
                     
                     Text(repo.name)
                         .font(.title2)
                         .fontWeight(.bold)
                         .minimumScaleFactor(0.6)
                         .lineLimit(1)
+                        .widgetAccentable()
                 }
                 .padding(.bottom, 6)
                 
@@ -51,6 +61,8 @@ struct RepoMediumView: View {
                     .minimumScaleFactor(0.6)
                     .lineLimit(1)
                     .foregroundStyle(daysSinceLastActivity > 50 ? .pink : .green)
+                    .contentTransition(.numericText())
+                    .widgetAccentable()
                 
                 Text("days ago")
                     .font(.caption2)
@@ -58,6 +70,7 @@ struct RepoMediumView: View {
             }
         }
         .padding()
+        .containerBackground(.fill.tertiary, for: .widget)
     }
     
     func calculateDaysSinceLastActivity(from dateString: String) -> Int {
@@ -71,13 +84,12 @@ struct RepoMediumView: View {
 
 struct RepoMediumView_Previews: PreviewProvider {
     static var previews: some View {
-        VStack {
+        Group {
+            RepoMediumView(repo: MockData.repoOne)
+                .previewContext(WidgetPreviewContext(family: .systemMedium))
+            
             RepoMediumView(repo: MockData.repoOne)
                 .previewContext(WidgetPreviewContext(family: .systemLarge))
-                .containerBackground(.fill.tertiary, for: .widget)
-            RepoMediumView(repo: MockData.repoTwo)
-                .previewContext(WidgetPreviewContext(family: .systemLarge))
-                .containerBackground(.fill.tertiary, for: .widget)
         }
     }
 }
