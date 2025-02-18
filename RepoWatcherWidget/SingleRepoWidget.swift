@@ -14,20 +14,18 @@ import SwiftUI
 struct SingleRepoWidget: Widget {
     let kind: String = "SingleRepoWidget"
 
+    init() {
+        UserDefaults.verifySharedAccess()
+    }
+
     var body: some WidgetConfiguration {
-//        StaticConfiguration(kind: kind, provider: SingleRepoProvider()) { entry in
-//            SingleRepoEntryView(entry: entry)
-//                .containerBackground(.fill.tertiary, for: .widget)
-//        }
-//        .configurationDisplayName("Single Repo")
-//        .description("Track a single Repository")
-//        .supportedFamilies([.systemMedium,.systemLarge])
-        AppIntentConfiguration(kind: kind, intent: SelectSingleRepo.self, provider: SingleRepoProvider()){ entry in
+        AppIntentConfiguration(kind: kind, intent: SelectSingleRepo.self, provider: SingleRepoProvider()) { entry in
             SingleRepoEntryView(entry: entry)
+                .containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName("Single Repo")
         .description("Track a single Repository")
-        .supportedFamilies([.systemMedium,.systemLarge])
+        .supportedFamilies([.systemMedium, .systemLarge])
     }
 }
 

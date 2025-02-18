@@ -2,13 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>INIntentsSupported</key>
+	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>SelectSingleRepo</string>
-	</array>
-	<key>NSUserActivityTypes</key>
-	<array>
-		<string>SelectSingleRepoIntent</string>
+		<string>group.com.michaelMartell.RepoWatcher</string>
 	</array>
 </dict>
 </plist>

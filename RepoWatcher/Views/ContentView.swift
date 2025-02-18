@@ -149,6 +149,7 @@ struct ContentView: View {
                 TokenInputSheet(githubKey: $githubKey, isPresented: $showingTokenSheet)
             }
             .onAppear {
+                UserDefaults.verifySharedAccess()
                 guard let retrievedRepos = UserDefaults.shared.array(forKey: UserDefaults.repoKey) as? [String] else {
                     let defaultValues = ["sallen0400/swift-news"]
                     UserDefaults.shared.set(defaultValues, forKey: UserDefaults.repoKey)
