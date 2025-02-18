@@ -8,7 +8,7 @@
 import WidgetKit
 import SwiftUI
 
-struct CompactRepoWidget: Widget {
+struct DoubleRepoWidget: Widget {
     let kind: String = "RepoWatcherWidget"
 
     var body: some WidgetConfiguration {
@@ -29,7 +29,7 @@ struct CompactRepoWidget: Widget {
 }
 
 #Preview(as: .systemMedium) {
-    CompactRepoWidget()
+    DoubleRepoWidget()
 } timeline: {
     CompactRepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
 }

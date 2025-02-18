@@ -8,7 +8,7 @@
 import SwiftUI
 import WidgetKit
 
-struct ContributorMediumView: View {
+struct SingleRepoView: View {
     let repo: Repository
     var body: some View {
         VStack {
@@ -69,7 +69,7 @@ struct ContributorMediumView: View {
 //}
 
 #Preview(as: .systemMedium) {
-    ContributorWidget()
+    SingleRepoWidget()
 } timeline: {
-    ContributorEntry(date: .now, repo: MockData.repoOne)
+    SingleRepoEntry(date: .now, repo: MockData.repoOne)
 }

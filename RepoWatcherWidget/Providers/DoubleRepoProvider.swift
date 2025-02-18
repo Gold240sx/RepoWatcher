@@ -8,7 +8,7 @@
 import WidgetKit
 import SwiftUI
 
-struct CompactRepoProvider: TimelineProvider {
+struct DoubleRepoProvider: TimelineProvider {
     func placeholder(in context: Context) -> CompactRepoEntry {
         // This is used for the design-time preview in Xcode
         CompactRepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)

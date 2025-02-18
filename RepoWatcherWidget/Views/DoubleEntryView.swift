@@ -8,15 +8,15 @@
 import SwiftUI
 import WidgetKit
 
-struct CompactRepoEntry: TimelineEntry {
+struct DoubleRepoEntry: TimelineEntry {
     let date: Date
     let repo: Repository
     let bottomRepo: Repository?
 }
 
-struct CompactRepoEntryView : View {
+struct DoubleRepoEntryView : View {
     @Environment(\.widgetFamily) var family
-    var entry: CompactRepoProvider.Entry
+    var entry: DoubleRepoProvider.Entry
 
     var body: some View {
         switch family {

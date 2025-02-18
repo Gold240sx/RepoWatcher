@@ -8,13 +8,13 @@
 import SwiftUI
 import WidgetKit
 
-struct ContributorEntry: TimelineEntry {
+struct SingleRepoEntry: TimelineEntry {
     let date: Date
     let repo: Repository
 }
 
-struct ContributorEntryView : View {
-    var entry: ContributorEntry
+struct SingleRepoEntryView : View {
+    var entry: SingleRepoEntry
 
     var body: some View {
         VStack {

@@ -8,7 +8,7 @@
 import WidgetKit
 import SwiftUI
 
-struct ContributorProvider: TimelineProvider {
+struct SingleRepoProvider: TimelineProvider {
     func placeholder(in context: Context) -> ContributorEntry {
         ContributorEntry(date: .now, repo: MockData.repoOne)
     }
