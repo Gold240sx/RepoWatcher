@@ -69,6 +69,8 @@ struct RepoMediumView: View {
                     .foregroundColor(.secondary)
             }
         }
+        .padding()
+        .containerBackground(.fill.tertiary, for: .widget)
     }
     
     func calculateDaysSinceLastActivity(from dateString: String) -> Int {
@@ -80,22 +82,14 @@ struct RepoMediumView: View {
     }
 }
 
-//struct RepoMediumView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        VStack {
-//            RepoMediumView(repo: MockData.repoOne)
-//                .previewContext(WidgetPreviewContext(family: .systemLarge))
-//                .containerBackground(.fill.tertiary, for: .widget)
-//            RepoMediumView(repo: MockData.repoTwo)
-//                .previewContext(WidgetPreviewContext(family: .systemLarge))
-//                .containerBackground(.fill.tertiary, for: .widget)
-//        }
-//    }
-//}
-
-#Preview(as:  .systemLarge) {
-    DoubleRepoWidget()
-} timeline: {
-    DoubleRepoEntry(date: .now, topRepo: MockData.repoOne, bottomRepo: MockData.repoTwo)
-    DoubleRepoEntry(date: .now, topRepo: MockData.repoTwo, bottomRepo: MockData.repoTwo)
+struct RepoMediumView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            RepoMediumView(repo: MockData.repoOne)
+                .previewContext(WidgetPreviewContext(family: .systemMedium))
+            
+            RepoMediumView(repo: MockData.repoOne)
+                .previewContext(WidgetPreviewContext(family: .systemLarge))
+        }
+    }
 }

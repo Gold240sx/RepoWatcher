@@ -10,6 +10,7 @@ import Foundation
 import WidgetKit
 import SwiftUI
 
+@main
 struct SingleRepoWidget: Widget {
     let kind: String = "SingleRepoWidget"
 
@@ -21,7 +22,7 @@ struct SingleRepoWidget: Widget {
 //        .configurationDisplayName("Single Repo")
 //        .description("Track a single Repository")
 //        .supportedFamilies([.systemMedium,.systemLarge])
-        IntentConfiguration(kind: kind, intent: SelectSingleRepoIntent.self, provider: SingleRepoProvider()){ entry in
+        AppIntentConfiguration(kind: kind, intent: SelectSingleRepo.self, provider: SingleRepoProvider()){ entry in
             SingleRepoEntryView(entry: entry)
         }
         .configurationDisplayName("Single Repo")
